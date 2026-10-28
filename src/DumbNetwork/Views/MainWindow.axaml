@@ -1,0 +1,291 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DumbNetwork.ViewModels"
+        xmlns:strategies="using:DumbNetwork.Strategies"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="1120" d:DesignHeight="740"
+        x:Class="DumbNetwork.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/app.ico"
+        Title="Dumb Network — zapret client"
+        Width="1120" Height="740"
+        MinWidth="960" MinHeight="640"
+        WindowStartupLocation="CenterScreen"
+        Background="#070C17">
+
+    <Window.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="Inter, Segoe UI, sans-serif" />
+        </Style>
+
+        <Style Selector="Border.chip">
+            <Setter Property="Background" Value="#0E1B2E" />
+            <Setter Property="BorderBrush" Value="#1D3150" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="Padding" Value="12,7" />
+        </Style>
+        <Style Selector="Border.chip.on">
+            <Setter Property="Background" Value="#10291F" />
+            <Setter Property="BorderBrush" Value="#2C6B50" />
+        </Style>
+        <Style Selector="Border.chip.error">
+            <Setter Property="Background" Value="#2A1118" />
+            <Setter Property="BorderBrush" Value="#6B2C38" />
+        </Style>
+
+        <Style Selector="Ellipse.dot">
+            <Setter Property="Fill" Value="#41506B" />
+            <Setter Property="Width" Value="7" />
+            <Setter Property="Height" Value="7" />
+        </Style>
+        <Style Selector="Ellipse.dot.on">
+            <Setter Property="Fill" Value="#42E695" />
+        </Style>
+        <Style Selector="Ellipse.dot.error">
+            <Setter Property="Fill" Value="#FF6B7A" />
+        </Style>
+
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="#0E182B" />
+            <Setter Property="BorderBrush" Value="#1B2A46" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="14" />
+        </Style>
+        <Style Selector="Border.card.selected">
+            <Setter Property="Background" Value="#142440" />
+            <Setter Property="BorderBrush" Value="#4F7FE8" />
+        </Style>
+        <Style Selector="Border.card:pointerover">
+            <Setter Property="Background" Value="#12203A" />
+            <Setter Property="BorderBrush" Value="#2C4570" />
+        </Style>
+
+        <Style Selector="Border.badge">
+            <Setter Property="Background" Value="#101F36" />
+            <Setter Property="BorderBrush" Value="#23395C" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="Padding" Value="6,2" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="ListBoxItem">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="Button.power">
+            <Setter Property="Background" Value="#101C33" />
+            <Setter Property="BorderBrush" Value="#24395F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="90" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.power.on">
+            <Setter Property="Background" Value="#123B2C" />
+            <Setter Property="BorderBrush" Value="#42E695" />
+        </Style>
+        <Style Selector="Button.power:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#162642" />
+            <Setter Property="BorderBrush" Value="#3C5E96" />
+        </Style>
+        <Style Selector="Button.power.on:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#18503B" />
+            <Setter Property="BorderBrush" Value="#42E695" />
+        </Style>
+        <Style Selector="Button.power:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Opacity" Value="0.55" />
+        </Style>
+
+        <Style Selector="Path.powerIcon">
+            <Setter Property="Fill" Value="#9FB3D6" />
+        </Style>
+        <Style Selector="Path.powerIcon.on">
+            <Setter Property="Fill" Value="#42E695" />
+        </Style>
+
+        <Style Selector="Button.link">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#8194B5" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="CornerRadius" Value="6" />
+        </Style>
+        <Style Selector="Button.link:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#14213A" />
+        </Style>
+    </Window.Styles>
+
+    <Grid ColumnDefinitions="360,*">
+        <!-- ================= Left: strategies ================= -->
+        <Border Grid.Column="0"
+                Background="#0A111F"
+                BorderBrush="#1B2A46"
+                BorderThickness="0,0,1,0">
+            <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="22,26,22,22">
+                <Grid ColumnDefinitions="Auto,*">
+                    <Border Width="42" Height="42" CornerRadius="12"
+                            Background="#10251F" BorderBrush="#2A5B47" BorderThickness="1">
+                        <Path Width="20" Height="20" Stretch="Uniform"
+                              Fill="#42E695"
+                              Data="M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13V3Z" />
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center" Spacing="1">
+                        <TextBlock Text="DUMB NETWORK" FontSize="16" FontWeight="Bold"
+                                   Foreground="#E8EEF9" LetterSpacing="1.5" />
+                        <TextBlock Text="zapret client" FontSize="11" Foreground="#5A6C8C" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="0,28,0,10" ColumnDefinitions="*,Auto">
+                    <TextBlock Text="СТРАТЕГИИ" FontSize="10" FontWeight="Bold"
+                               Foreground="#5A6C8C" LetterSpacing="1.5" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Text="{Binding Strategies.Count}"
+                               FontSize="10" Foreground="#41506B" VerticalAlignment="Center" />
+                </Grid>
+
+                <ListBox Grid.Row="2"
+                         ItemsSource="{Binding Strategies}"
+                         SelectedItem="{Binding SelectedStrategy}"
+                         IsEnabled="{Binding !IsBusy}"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Padding="0"
+                         SelectionMode="Single"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="strategies:StrategyDefinition">
+                            <Border Classes="card"
+                                    Classes.selected="{Binding $parent[ListBoxItem].IsSelected}"
+                                    Padding="13">
+                                <Grid ColumnDefinitions="4,*">
+                                    <Border Grid.Column="0" Width="3" CornerRadius="2"
+                                            Margin="0,2,10,2"
+                                            Background="#42E695"
+                                            IsVisible="{Binding $parent[ListBoxItem].IsSelected}" />
+                                    <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Text="{Binding Name}" FontSize="14"
+                                                       FontWeight="SemiBold" Foreground="#E8EEF9"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       VerticalAlignment="Center" />
+                                            <Border Grid.Column="1" Classes="badge" Margin="8,0,0,0">
+                                                <TextBlock Text="{Binding Badge}" FontSize="9"
+                                                           FontWeight="Bold" Foreground="#7FA5E8"
+                                                           LetterSpacing="0.6" />
+                                            </Border>
+                                        </Grid>
+                                        <TextBlock Grid.Row="1" Text="{Binding Description}"
+                                                   FontSize="11.5" Foreground="#8194B5"
+                                                   TextWrapping="Wrap" Margin="0,6,0,9" />
+                                        <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
+                                            <TextBlock Text="{Binding PortSummary}" FontSize="10"
+                                                       Foreground="#5A6C8C"
+                                                       TextTrimming="CharacterEllipsis" />
+                                            <TextBlock Grid.Column="1" Text="{Binding PlatformLabel}"
+                                                       FontSize="10" Foreground="#5A6C8C"
+                                                       Margin="8,0,0,0" />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <StackPanel Grid.Row="3" Spacing="7" Margin="0,14,0,0">
+                    <Border Height="1" Background="#16233A" Margin="0,0,0,6" />
+                    <TextBlock Text="{Binding BackendText}" FontSize="10.5"
+                               Foreground="#8194B5" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="{Binding PrivilegeText}" FontSize="10.5"
+                               Foreground="#5A6C8C" TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ================= Right: status + power + log ================= -->
+        <Grid Grid.Column="1" RowDefinitions="Auto,*,Auto" Margin="36,28,36,26">
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Spacing="3">
+                    <TextBlock Text="{Binding ActiveStrategyName}" FontSize="18"
+                               FontWeight="SemiBold" Foreground="#E8EEF9" />
+                    <TextBlock Text="{Binding PlatformText}" FontSize="11" Foreground="#5A6C8C" />
+                </StackPanel>
+                <Border Grid.Column="1" Classes="chip" Classes.on="{Binding IsRunning}"
+                        Classes.error="{Binding IsFailed}"
+                        VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Ellipse Classes="dot" Classes.on="{Binding IsRunning}"
+                                 Classes.error="{Binding IsFailed}" />
+                        <TextBlock Text="{Binding StatusText}" FontSize="10" FontWeight="Bold"
+                                   Foreground="#B7C7E2" LetterSpacing="1" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Spacing="20" MaxWidth="460">
+                <Grid Width="230" Height="230" HorizontalAlignment="Center">
+                    <Border Width="230" Height="230" CornerRadius="115"
+                            Background="#0A1424" BorderBrush="#18294A" BorderThickness="1" />
+                    <Border Width="212" Height="212" CornerRadius="106"
+                            BoxShadow="0 0 60 0 #3342E695"
+                            IsVisible="{Binding IsRunning}" IsHitTestVisible="False" />
+                    <Button Classes="power" Classes.on="{Binding IsRunning}"
+                            Command="{Binding ToggleCommand}"
+                            IsEnabled="{Binding !IsBusy}"
+                            Width="176" Height="176"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Viewbox Width="62" Height="62">
+                            <Path Classes="powerIcon" Classes.on="{Binding IsRunning}"
+                                  Data="M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13V3Z" />
+                        </Viewbox>
+                    </Button>
+                </Grid>
+
+                <StackPanel Spacing="7" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding StatusText}" FontSize="27" FontWeight="Bold"
+                               Foreground="#E8EEF9" HorizontalAlignment="Center" LetterSpacing="1" />
+                    <TextBlock Text="{Binding StatusDetails}" FontSize="12.5"
+                               Foreground="#8194B5" TextAlignment="Center" TextWrapping="Wrap"
+                               MaxWidth="430" />
+                </StackPanel>
+
+                <TextBlock Text="{Binding ToggleHint}" FontSize="11" Foreground="#5A6C8C"
+                           HorizontalAlignment="Center" />
+            </StackPanel>
+
+            <Border Grid.Row="2" Background="#080F1C" BorderBrush="#1B2A46"
+                    BorderThickness="1" CornerRadius="14" Padding="16,12">
+                <Grid RowDefinitions="Auto,150">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="ЖУРНАЛ" FontSize="10" FontWeight="Bold"
+                                   Foreground="#5A6C8C" LetterSpacing="1.5"
+                                   VerticalAlignment="Center" />
+                        <Button Grid.Column="1" Classes="link" Content="Очистить"
+                                Command="{Binding ClearLogCommand}" />
+                    </Grid>
+                    <ScrollViewer x:Name="LogScroll" Grid.Row="1" Margin="0,8,0,0"
+                                  VerticalScrollBarVisibility="Auto">
+                        <TextBlock Text="{Binding LogText}" FontFamily="monospace" FontSize="11"
+                                   Foreground="#8FA3C7" TextWrapping="Wrap" LineHeight="17" />
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

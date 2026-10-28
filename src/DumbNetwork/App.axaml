@@ -1,0 +1,23 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="DumbNetwork.App"
+             RequestedThemeVariant="Dark">
+
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#E8EEF9" />
+        <SolidColorBrush x:Key="TextMutedBrush" Color="#8194B5" />
+        <SolidColorBrush x:Key="TextDimBrush" Color="#5A6C8C" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#42E695" />
+        <SolidColorBrush x:Key="AccentSoftBrush" Color="#1B3D33" />
+        <SolidColorBrush x:Key="DangerBrush" Color="#FF6B7A" />
+        <SolidColorBrush x:Key="PanelBrush" Color="#0B1424" />
+        <SolidColorBrush x:Key="CardBrush" Color="#0E182B" />
+        <SolidColorBrush x:Key="CardSelectedBrush" Color="#142440" />
+        <SolidColorBrush x:Key="StrokeBrush" Color="#1B2A46" />
+        <SolidColorBrush x:Key="StrokeSelectedBrush" Color="#4F7FE8" />
+    </Application.Resources>
+</Application>
